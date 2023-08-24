@@ -18,28 +18,31 @@ const App = () => {
   //     });
   // }, []);
   const [selected, setSelected] = useState(0);
+  const skills = ['php', 'js', 'c', 'c++'];
 
   return (
     <View style={styles.container}>
       <TouchableHighlight>
         <Text style={styles.button}>Fuck Me</Text>
       </TouchableHighlight>
-      <TouchableOpacity onPress={()=>setSelected(1)}>
+      {skills.map((item,i) => (
+        <TouchableOpacity key={i} onPress={() => setSelected(i+1)}>
         <View style={styles.radioWrapper}>
           <View style={styles.radio}>
-            {selected === 1 ? <View style={styles.radioBG}></View> : null}
+            {selected === i+1 ? <View style={styles.radioBG}></View> : null}
           </View>
-          <Text style={styles.radioText}>Radio 1</Text>
+          <Text style={styles.radioText}>{item}</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>setSelected(2)}>
+      ))}
+      {/* <TouchableOpacity onPress={() => setSelected(2)}>
         <View style={styles.radioWrapper}>
           <View style={styles.radio}>
             {selected === 2 ? <View style={styles.radioBG}></View> : null}
           </View>
           <Text style={styles.radioText}>Radio 2</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -56,6 +59,7 @@ const styles = StyleSheet.create({
   },
   radioText: {
     fontSize: 25,
+    color: '#000',
   },
   radioWrapper: {
     flexDirection: 'row',

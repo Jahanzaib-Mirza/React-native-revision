@@ -9,6 +9,7 @@ import {
   TextInput,
   FlatList,
   SafeAreaView,
+  SectionList
 } from 'react-native';
 
 const Item = ({title}) => (
@@ -16,6 +17,24 @@ const Item = ({title}) => (
     <Text style={styles.title}>{title}</Text>
   </View>
 );
+const DATA = [
+  {
+    title: 'Main dishes',
+    data: ['Pizza', 'Burger', 'Risotto'],
+  },
+  {
+    title: 'Sides',
+    data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
+  },
+  {
+    title: 'Drinks',
+    data: ['Water', 'Coke', 'Beer'],
+  },
+  {
+    title: 'Desserts',
+    data: ['Cheese Cake', 'Ice Cream'],
+  },
+];
 const Box = props => (
   // <View style={styles.box}>
   <Text style={styles.box}>{props.title}</Text>
@@ -43,99 +62,37 @@ const App = () => {
   }, []);
 
   return (
-    <ScrollView>
-      <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
-        {data.map((item) => {
-          <Box title={item.userName} />;
-        })}
-      </View>
-      <Text style={{fontSize: 60}}>
-        fuck u {name} {num} times
-      </Text>
-      <Button title="press me" style={styles.btn} onPress={updateNum} />
-      <TextInput
-        placeholder="Enter Name"
-        value={name}
-        style={styles.input}
-        onChangeText={e => setName(e)}
-      />
-      <TextInput
-        placeholder="Enter Password"
-        value={pass}
-        secureTextEntry={true}
-        style={styles.input}
-        onChangeText={e => setpass(e)}
-      />
-      <TextInput
-        placeholder="Enter email"
-        value={email}
-        style={styles.input}
-        onChangeText={e => setemail(e)}
-      />
-      <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-        <Button
-          style={styles.btn}
-          title="Print"
-          onPress={() => setShow(true)}
+    <View>
+        <SectionList
+          sections={DATA}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({item}) => (
+            <View style={styles.item}>
+              <Text style={styles.title}>{item}</Text>
+            </View>
+          )}
+          renderSectionHeader={({section: {title}}) => (
+            <Text style={styles.header}>{title}</Text>
+          )}
         />
-        <Button style={styles.btn} title="Press" />
-      </View>
-      <SafeAreaView>
-        <FlatList
-          data={data}
-          renderItem={({item}) => <Box title={item.userName} />}
-        />
-      </SafeAreaView>
-      {show && (
-        <View>
-          <Text>Name : {name}</Text>
-          <Text>Email : {email}</Text>
-        </View>
-      )}
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  btn: {
-    backgroundColor: 'green',
-    color: '#fff',
-    borderRadius: 5,
-    margin: 4,
-  },
-  input: {
-    backgroundColor: '#f9c2ff',
-    borderColor: 'black',
-    margin: 5,
-    padding: 5,
-    borderWidth: 2,
-    borderRadius: 5,
+  container: {
+    flex: 1,
   },
   item: {
     backgroundColor: '#f9c2ff',
     padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
   },
-  box: {
-    width: 100,
-    height: 100,
-    backgroundColor: 'aqua',
-    marginTop: 10,
-    marginHorizontal: 5,
-    padding: 3,
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    textAlignVertical: 'center',
-
-    // alignItems:"center"
+  header: {
+    fontSize: 32,
+    backgroundColor: '#fff',
   },
   title: {
-    fontSize: 32,
-  },
-  boxTitle: {
-    fontSize: 15,
+    fontSize: 24,
   },
 });
 

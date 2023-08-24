@@ -3,89 +3,89 @@ import axios from 'axios';
 import {
   View,
   Text,
-  ScrollView,
-  Button,
   StyleSheet,
-  TextInput,
-  FlatList,
-  SafeAreaView,
-  SectionList
+  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 
-const Item = ({title}) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
-const DATA = [
-  {
-    title: 'Main dishes',
-    data: ['Pizza', 'Burger', 'Risotto'],
-  },
-  {
-    title: 'Sides',
-    data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
-  },
-  {
-    title: 'Drinks',
-    data: ['Water', 'Coke', 'Beer'],
-  },
-  {
-    title: 'Desserts',
-    data: ['Cheese Cake', 'Ice Cream'],
-  },
-];
-const Box = props => (
-  // <View style={styles.box}>
-  <Text style={styles.box}>{props.title}</Text>
-  // </View>
-);
-
 const App = () => {
-  const [num, setNum] = useState(0);
-  const [name, setName] = useState('');
-  const [pass, setpass] = useState('');
-  const [email, setemail] = useState('');
-  const [show, setShow] = useState(false);
-  const [data, setData] = useState([]);
-  const updateNum = () => {
-    setNum(num + 1);
-  };
-
-  useEffect(() => {
-    axios
-      .get('https://annovate-backend-production.up.railway.app/api/users/')
-      .then(res => {
-        console.log(res.data);
-        setData(res.data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get('https://annovate-backend-production.up.railway.app/api/users/')
+  //     .then(res => {
+  //       console.log(res.data);
+  //       setData(res.data);
+  //     });
+  // }, []);
+  const [selected, setSelected] = useState(0);
 
   return (
-    <View>
-        <SectionList
-          sections={DATA}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({item}) => (
-            <View style={styles.item}>
-              <Text style={styles.title}>{item}</Text>
-            </View>
-          )}
-          renderSectionHeader={({section: {title}}) => (
-            <Text style={styles.header}>{title}</Text>
-          )}
-        />
+    <View style={styles.container}>
+      <TouchableHighlight>
+        <Text style={styles.button}>Fuck Me</Text>
+      </TouchableHighlight>
+      <TouchableOpacity onPress={()=>setSelected(1)}>
+        <View style={styles.radioWrapper}>
+          <View style={styles.radio}>
+            {selected === 1 ? <View style={styles.radioBG}></View> : null}
+          </View>
+          <Text style={styles.radioText}>Radio 1</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>setSelected(2)}>
+        <View style={styles.radioWrapper}>
+          <View style={styles.radio}>
+            {selected === 2 ? <View style={styles.radioBG}></View> : null}
+          </View>
+          <Text style={styles.radioText}>Radio 2</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  radio: {
+    backgroundColor: '#fff',
+    height: 30,
+    width: 30,
+    borderColor: '#000',
+    borderWidth: 2,
+    borderRadius: 15,
+    margin: 10,
+  },
+  radioText: {
+    fontSize: 25,
+  },
+  radioWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  radioBG: {
+    backgroundColor: '#000',
+    height: 22,
+    width: 22,
+    borderRadius: 11,
+    margin: 2,
+  },
   container: {
     flex: 1,
+    // alignItems:"center",
+    justifyContent: 'center',
+    backgroundColor: 'aqua',
   },
-  item: {
+  button: {
     backgroundColor: '#f9c2ff',
-    padding: 20,
+    textAlign: 'center',
+    padding: 10,
+    margin: 20,
+    fontSize: 25,
+    borderRadius: 10,
+    shadowColor: '#000',
+    elevation: 10,
+    shadowOpacity: 1,
+    color: '#fff',
+    fontWeight: 'bold',
   },
   header: {
     fontSize: 32,

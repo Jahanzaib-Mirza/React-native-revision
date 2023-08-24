@@ -1,23 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import {View, ActivityIndicator, StyleSheet, Button} from 'react-native';
+import {View, StyleSheet, Button, Modal, Text} from 'react-native';
 
 const App = () => {
-  const [animated, setAnimated] = useState(false);
-  const fetchData = () => {
-    setAnimated(true)
-    axios
-      .get('https://annovate-backend-production.up.railway.app/api/users/')
-      .then(res => {
-        console.warn("Data Fetched Successfully");
-        setAnimated(false)
-        // setData(res.data);
-      });
-  };
+  const [show, setShow] = useState(false);
+
   return (
-    <View style={styles.container}>
-      <ActivityIndicator color={'gold'} size={150} animating={animated} />
-      <Button color={"purple"} title="Fetch Data" onPress={fetchData} />
+    <View style={styles.container} >
+      <Modal transparent={true} visible={show}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Fuck U Hard</Text>
+            <Button title="Close" onPress={()=>setShow(false)}/>
+          </View>
+        </View>
+      </Modal>
+      <View style={styles.buttonWrapper}>
+        <Button title="Open" onPress={()=>setShow(true)} />
+      </View>
     </View>
   );
 };
@@ -25,9 +24,26 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'aqua',
+  },
+  buttonWrapper: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  modalContainer: {flex: 1, justifyContent: 'center'},
+  modalView: {
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingVertical:20,
+    margin: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    elevation: 7,
+  },
+  modalText: {
+    fontSize: 25,
+    marginBottom: 10,
   },
 });
 

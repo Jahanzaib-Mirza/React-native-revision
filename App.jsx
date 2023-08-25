@@ -6,7 +6,7 @@ const App = () => {
 
   return (
     <View style={styles.container} >
-      <Modal transparent={true} visible={show}>
+      <Modal transparent={true} visible={show} animationType='slide'>
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Fuck U Hard</Text>

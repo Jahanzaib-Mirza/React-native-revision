@@ -1,23 +1,56 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Button, Modal, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+function HomeScreen(props) {
+  console.warn(props.route.params);
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Home Screen</Text>
+      <Text>Email : {props.route.params.email}</Text>
+    </View>
+  );
+}
+function Login(props) {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Enter secret Key</Text>
+      <Button
+        title="Login"
+        onPress={() =>
+          props.navigation.navigate('Home', {email: 'jahanzaibm29@gmail.com'})
+        }
+      />
+    </View>
+  );
+}
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const [show, setShow] = useState(false);
-
   return (
-    <View style={styles.container} >
-      <Modal transparent={true} visible={show} animationType='slide'>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Fuck U Hard</Text>
-            <Button title="Close" onPress={()=>setShow(false)}/>
-          </View>
-        </View>
-      </Modal>
-      <View style={styles.buttonWrapper}>
-        <Button title="Open" onPress={()=>setShow(true)} />
-      </View>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerTitle: ()=><Button title='hola'/>,
+            headerRight:()=> <Button title='lola'/>,
+            headerStyle: {
+              backgroundColor: 'gold',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontSize: 30,
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
@@ -35,7 +68,7 @@ const styles = StyleSheet.create({
   modalView: {
     backgroundColor: '#fff',
     paddingHorizontal: 20,
-    paddingVertical:20,
+    paddingVertical: 20,
     margin: 10,
     borderRadius: 10,
     shadowColor: '#000',

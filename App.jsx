@@ -1,53 +1,27 @@
-import React from 'react';
-import {View, Text, Button} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React ,{useState}from 'react';
+import {View, Text, Button, TextInput} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Tab = createMaterialTopTabNavigator();
 
 const App = () => {
+  const [name,setName]=useState("");
+  const saveData = async()=>{
+    await AsyncStorage.setItem("name",name);
+    setName("");
+  }
+  const getData = async()=>{
+    let n = await AsyncStorage.getItem("name");
+    setName(n);
+  }
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => {
-            let iconName;
-            size=20;
-            if (route.name === 'Home') {
-              iconName = focused ? 'home' : 'home-outline';
-            } else if (route.name === 'Settings') {
-              iconName = focused ? 'list' : 'list-outline';
-            }
-            console.warn(typeof(size));
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
-          tabBarShowLabel: false,
-        })}>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={Setting} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <View style={{flex:1,justifyContent:"center"}}>
+      <TextInput value={name} style={{backgroundColor:"#2ffd",borderWidth:2,borderColor:"#000",margin:5}}
+       onChangeText={(text)=>setName(text)} placeholder='Enter Name'/>
+      <Button onPress={saveData} title='Save'/>
+      <Button onPress={getData} title='Get Data'/>
+    </View>
   );
 };
 
-const HomeScreen = () => {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Ionicons name="home" />
-      <Button title="hello" onPress={() => console.warn('hello')} />
-    </View>
-  );
-};
-const Setting = () => {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Enter secret Key</Text>
-    </View>
-  );
-};
+
 export default App;
